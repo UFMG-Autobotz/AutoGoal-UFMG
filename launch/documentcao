@@ -1,0 +1,17 @@
+Esse arquivo faz tudo pra vc, é só chamar ele com o roslaunch
+
+	=> roslaunch vss vss.launch team:=<cor> view:=<true/false> usb:=<numero tabelado>
+
+team:=
+	Parametro Obrigatorio, A cor do nosso time, azul ou amarelo
+
+view:= 
+	Parametro opcional, se vc digitar view:=1 ou view:=true, alem de tudo uma janela vai abrir com a imagem pura da camera
+	default: false
+
+usb:=
+	Parametro opcional, O numero da porta USB tabelado pelos criadores da RS232, normalmenta pra arduino o numero é o 24 ou 25, se não for nenhum deles, tem que procurar no site da rs232 (o link é mostrado quando o numero errado é inserido)
+	default: 23
+
+exemplo:
+ roslaunch vss vss.launch team:=azul usb:=25
