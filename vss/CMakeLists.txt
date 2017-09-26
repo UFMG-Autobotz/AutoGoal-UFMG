@@ -14,7 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   cv_bridge
   image_transport
-  geometry_msgs 
+  geometry_msgs
   #vrep_common
   message_generation
 )
@@ -118,22 +118,26 @@ catkin_package(
 
 #simulador
 
-add_executable(pause src/pause.cpp) 
+add_executable(pause src/pause.cpp)
 
-add_executable(teste src/Subscriber.cpp) 
+add_executable(teste src/Subscriber.cpp)
+add_dependencies(teste ${PROJECT_NAME}_generate_messages_cpp)
 
-add_executable(estrategia src/estrategia/funcoes.hpp src/estrategia/funcoes.cpp src/estrategia/wavefront.cpp) 
-##add_dependencies(simulador vrep_common_generate_messages_cpp)
+add_executable(estrategia src/estrategia/funcoes.hpp src/estrategia/funcoes.cpp src/estrategia/wavefront.cpp)
+add_dependencies(estrategia ${PROJECT_NAME}_generate_messages_cpp)
 
 ## Declare a cpp executable
 
 #Detecção de linha/bola/inimigo
 add_executable(setLine src/setLine/main.cpp)
+add_dependencies(setLine ${PROJECT_NAME}_generate_messages_cpp)
 add_executable(detectEnemy src/detectObject/multipleObjectTracking.cpp src/detectObject/robot.cpp)
 
 #conversor de imagens pro ar_pose
 add_executable(im_converter src/im_converter/main.cpp)
+add_dependencies(im_converter ${PROJECT_NAME}_generate_messages_cpp)
 add_executable(robot_view src/interface/show.cpp)
+add_dependencies(robot_view ${PROJECT_NAME}_generate_messages_cpp)
 
 #comunicação serial de arduino com ros
 #add_executable(arducom src/arducom/main.cpp)
@@ -141,6 +145,7 @@ add_executable(joystick src/arducom/publisher.cpp)
 
 #controle
 add_executable(controle src/controle/main.cpp src/controle/fut.cpp)
+add_dependencies(controle ${PROJECT_NAME}_generate_messages_cpp)
 
 
 
@@ -214,5 +219,3 @@ target_link_libraries(joystick ${catkin_LIBRARIES})
 target_link_libraries(controle ${catkin_LIBRARIES})
 target_link_libraries(teste ${catkin_LIBRARIES})
 target_link_libraries(pause ${catkin_LIBRARIES})
-
-
