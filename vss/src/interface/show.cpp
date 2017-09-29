@@ -93,7 +93,7 @@ void objectPlacer(const std_msgs::String::ConstPtr& msg){
 Está função está lendo as coordenadas do ar_pose e postando na tela, além de inserir os dados em uma mensagem do ROS
 
 *******************************************************************************************************************/
-Mat campo (600, 480, CV_8UC3, Scalar(0,0,0));
+Mat campo = cvCreateImage(cvSize(600, 480), 8, 3);
 	void processing (const ar_pose::ARMarkers::ConstPtr& msg){
 		
 		//Mat campo = imread(caminhoIm, CV_LOAD_IMAGE_COLOR);
