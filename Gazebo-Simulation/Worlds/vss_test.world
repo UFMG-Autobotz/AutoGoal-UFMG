@@ -12,10 +12,13 @@
       <uri>model://sun</uri>
     </include>
 
-    <!-- A ground plane -->
-    <include>
-      <uri>model://ground_plane</uri>
-    </include>
+    <model name="court">
+      <include>
+        <uri>model://campo/</uri>
+        <pose>-0.2 0 -0.0155 0 0 0</pose>
+        <static>true</static>
+      </include>
+    </model>
 
     <model name="player1">
       <include>

@@ -11,6 +11,19 @@ material VSS_Player/DarkGrey
   }
 }
 
+material VSS_Player/Black
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.05 0.05 0.05 1
+      diffuse 0.05 0.05 0.05 1
+      specular 0.1 0.1 0.1 1 5.0
+    }
+  }
+}
+
 material VSS_Player/blue1
 {
   technique
