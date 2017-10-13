@@ -1,6 +1,0 @@
-<launch>
-  <node pkg="camera1394" type="camera1394_node" name="camera1394" 
-    args="_guid:=00b09d01009ce773" />	
-
-  <node pkg="camera_calibration" type="cameracalibrator.py" name="cameracalibrator.py" args="--size 8x6 --square 0.35 image:=/camera/image_raw camera:=/camera/"/>
-</launch>
