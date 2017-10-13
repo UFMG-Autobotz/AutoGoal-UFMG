@@ -1,5 +1,9 @@
 <sdf version='1.6'>
   <world name='default'>
+    <plugin name='config' filename='libPlayers_Config.so'>
+      <param1 model='player1'>VSS_Player/yellow1</param1>
+      <param2 model='player2'>VSS_Player/blue2</param2>
+    </plugin>
     <light name='sun' type='directional'>
       <cast_shadows>1</cast_shadows>
       <pose frame=''>0 0 10 0 -0 0</pose>
@@ -60,9 +64,9 @@
         <gravity>1</gravity>
       </link>
     </model>
-    <model name='player'>
+    <model name='player1'>
       <link name='player::chassi'>
-        <pose frame=''>0 0 0.01 0 -0 0</pose>
+        <pose frame=''>-0.2 0 0.01 0 -0 0</pose>
         <inertial>
           <pose frame=''>0 0 0.035 0 -0 0</pose>
           <mass>0.3136</mass>
@@ -75,11 +79,51 @@
             <izz>0.000334507</izz>
           </inertia>
         </inertial>
-        <collision name='chassi_collision'>
-          <pose frame=''>0 0 0.035 0 -0 0</pose>
+        <collision name='chassi_kicker_collision'>
+          <geometry>
+            <polyline>
+              <height>0.04</height>
+              <point>0.04 0.04</point>
+              <point>-0.04 0.04</point>
+              <point>-0.04 -0.04</point>
+              <point>0.04 -0.04</point>
+              <point>0.04 -0.025</point>
+              <point>0.0383616 -0.0219186</point>
+              <point>0.0369421 -0.0187303</point>
+              <point>0.0357484 -0.0154508</point>
+              <point>0.0347865 -0.0120961</point>
+              <point>0.0340609 -0.00868241</point>
+              <point>0.0335752 -0.00522642</point>
+              <point>0.0333317 -0.00174497</point>
+              <point>0.0333317 0.00174497</point>
+              <point>0.0335752 0.00522642</point>
+              <point>0.0340609 0.00868241</point>
+              <point>0.0347865 0.0120961</point>
+              <point>0.0357484 0.0154508</point>
+              <point>0.0369421 0.0187303</point>
+              <point>0.0383616 0.0219186</point>
+              <point>0.04 0.025</point>
+            </polyline>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='chassi_body_collision'>
+          <pose frame=''>0 0 0.055 0 -0 0</pose>
           <geometry>
             <box>
-              <size>0.08 0.08 0.07</size>
+              <size>0.08 0.08 0.03</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -96,44 +140,84 @@
             </friction>
           </surface>
         </collision>
-        <visual name='chassi_body_visual'>
-          <pose frame=''>0 0 0.034825 0 -0 0</pose>
+        <visual name='chassi_kicker_visual'>
           <geometry>
-            <box>
-              <size>0.08 0.08 0.06965</size>
-            </box>
+            <polyline>
+              <height>0.04</height>
+              <point>0.04 0.04</point>
+              <point>-0.04 0.04</point>
+              <point>-0.04 -0.04</point>
+              <point>0.04 -0.04</point>
+              <point>0.04 -0.025</point>
+              <point>0.0383616 -0.0219186</point>
+              <point>0.0369421 -0.0187303</point>
+              <point>0.0357484 -0.0154508</point>
+              <point>0.0347865 -0.0120961</point>
+              <point>0.0340609 -0.00868241</point>
+              <point>0.0335752 -0.00522642</point>
+              <point>0.0333317 -0.00174497</point>
+              <point>0.0333317 0.00174497</point>
+              <point>0.0335752 0.00522642</point>
+              <point>0.0340609 0.00868241</point>
+              <point>0.0347865 0.0120961</point>
+              <point>0.0357484 0.0154508</point>
+              <point>0.0369421 0.0187303</point>
+              <point>0.0383616 0.0219186</point>
+              <point>0.04 0.025</point>
+            </polyline>
           </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <name>VSS_Player/DarkGrey</name>
+            </script>
+          </material>
         </visual>
-        <visual name='chassi_tag_visual'>
-          <pose frame=''>0 0 0.069825 0 -0 0</pose>
+        <visual name='chassi_body_visual'>
+          <pose frame=''>0 0 0.054999 0 -0 0</pose>
           <geometry>
             <box>
-              <size>0.08 0.08 0.00035</size>
+              <size>0.08 0.08 0.029997</size>
             </box>
           </geometry>
           <material>
             <script>
               <uri>file://Scripts</uri>
-              <uri>file://Textures</uri>
-              <name>VSS_Player/tag</name>
+              <name>VSS_Player/DarkGrey</name>
             </script>
           </material>
+        </visual>
+        <visual name='chassi_tag_visual'>
+          <pose frame=''>0 0 0.069997 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.08 0.08 7e-06</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <uri>file://Textures/VSS</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+          <plugin name='texture' filename='libchange_texture.so'/>
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
       <link name='player::left_wheel'>
-        <pose frame=''>-0.0155 0.033 0.016 1.5708 -0 0</pose>
+        <pose frame=''>-0.2155 0.033 0.016 1.5708 -0 0</pose>
         <inertial>
-          <mass>0.00402124</mass>
+          <mass>0.00804248</mass>
           <inertia>
-            <ixx>2.9087e-07</ixx>
+            <ixx>5.81739e-07</ixx>
             <ixy>0</ixy>
             <ixz>0</ixz>
-            <iyy>2.9087e-07</iyy>
+            <iyy>5.81739e-07</iyy>
             <iyz>0</iyz>
-            <izz>5.14718e-07</izz>
+            <izz>1.02944e-06</izz>
           </inertia>
         </inertial>
         <collision name='left_wheel_collision'>
@@ -167,22 +251,28 @@
               <length>0.01</length>
             </cylinder>
           </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <name>VSS_Player/DarkGrey</name>
+            </script>
+          </material>
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
       <link name='player::right_wheel'>
-        <pose frame=''>-0.0155 -0.033 0.016 1.5708 -0 0</pose>
+        <pose frame=''>-0.2155 -0.033 0.016 1.5708 -0 0</pose>
         <inertial>
-          <mass>0.00402124</mass>
+          <mass>0.00804248</mass>
           <inertia>
-            <ixx>2.9087e-07</ixx>
+            <ixx>5.81739e-07</ixx>
             <ixy>0</ixy>
             <ixz>0</ixz>
-            <iyy>2.9087e-07</iyy>
+            <iyy>5.81739e-07</iyy>
             <iyz>0</iyz>
-            <izz>5.14718e-07</izz>
+            <izz>1.02944e-06</izz>
           </inertia>
         </inertial>
         <collision name='right_wheel_collision'>
@@ -216,22 +306,28 @@
               <length>0.01</length>
             </cylinder>
           </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <name>VSS_Player/DarkGrey</name>
+            </script>
+          </material>
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
       <link name='player::ball_wheel'>
-        <pose frame=''>0.02 0 0.01 0 -0 0</pose>
+        <pose frame=''>-0.18 0 0.01 0 -0 0</pose>
         <inertial>
-          <mass>0.00209439</mass>
+          <mass>0.00418879</mass>
           <inertia>
-            <ixx>8.37758e-08</ixx>
+            <ixx>1.67552e-07</ixx>
             <ixy>0</ixy>
             <ixz>0</ixz>
-            <iyy>8.37758e-08</iyy>
+            <iyy>1.67552e-07</iyy>
             <iyz>0</iyz>
-            <izz>8.37758e-08</izz>
+            <izz>1.67552e-07</izz>
           </inertia>
         </inertial>
         <collision name='ball_wheel_collision'>
@@ -263,6 +359,12 @@
               <radius>0.01</radius>
             </sphere>
           </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <name>VSS_Player/DarkGrey</name>
+            </script>
+          </material>
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
@@ -304,10 +406,411 @@
         <parent>player::chassi</parent>
         <child>player::ball_wheel</child>
       </joint>
-      <plugin name='player plugin' filename='libpid_control_plugin.so'>
+      <plugin name='player 1 plugin' filename='libpid_control_plugin.so'>
         <velocity>true</velocity>
         <pid>0.001 0 0</pid>
       </plugin>
+    </model>
+    <model name='player2'>
+      <link name='player::chassi'>
+        <pose frame=''>0.2 0 0.01 0 -0 3.14</pose>
+        <inertial>
+          <pose frame=''>0 0 0.035 0 -0 0</pose>
+          <mass>0.3136</mass>
+          <inertia>
+            <ixx>0.000295307</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000295307</iyy>
+            <iyz>0</iyz>
+            <izz>0.000334507</izz>
+          </inertia>
+        </inertial>
+        <collision name='chassi_kicker_collision'>
+          <geometry>
+            <polyline>
+              <height>0.04</height>
+              <point>0.04 0.04</point>
+              <point>-0.04 0.04</point>
+              <point>-0.04 -0.04</point>
+              <point>0.04 -0.04</point>
+              <point>0.04 -0.025</point>
+              <point>0.0383616 -0.0219186</point>
+              <point>0.0369421 -0.0187303</point>
+              <point>0.0357484 -0.0154508</point>
+              <point>0.0347865 -0.0120961</point>
+              <point>0.0340609 -0.00868241</point>
+              <point>0.0335752 -0.00522642</point>
+              <point>0.0333317 -0.00174497</point>
+              <point>0.0333317 0.00174497</point>
+              <point>0.0335752 0.00522642</point>
+              <point>0.0340609 0.00868241</point>
+              <point>0.0347865 0.0120961</point>
+              <point>0.0357484 0.0154508</point>
+              <point>0.0369421 0.0187303</point>
+              <point>0.0383616 0.0219186</point>
+              <point>0.04 0.025</point>
+            </polyline>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='chassi_body_collision'>
+          <pose frame=''>0 0 0.055 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.08 0.08 0.03</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='chassi_kicker_visual'>
+          <geometry>
+            <polyline>
+              <height>0.04</height>
+              <point>0.04 0.04</point>
+              <point>-0.04 0.04</point>
+              <point>-0.04 -0.04</point>
+              <point>0.04 -0.04</point>
+              <point>0.04 -0.025</point>
+              <point>0.0383616 -0.0219186</point>
+              <point>0.0369421 -0.0187303</point>
+              <point>0.0357484 -0.0154508</point>
+              <point>0.0347865 -0.0120961</point>
+              <point>0.0340609 -0.00868241</point>
+              <point>0.0335752 -0.00522642</point>
+              <point>0.0333317 -0.00174497</point>
+              <point>0.0333317 0.00174497</point>
+              <point>0.0335752 0.00522642</point>
+              <point>0.0340609 0.00868241</point>
+              <point>0.0347865 0.0120961</point>
+              <point>0.0357484 0.0154508</point>
+              <point>0.0369421 0.0187303</point>
+              <point>0.0383616 0.0219186</point>
+              <point>0.04 0.025</point>
+            </polyline>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <name>VSS_Player/DarkGrey</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='chassi_body_visual'>
+          <pose frame=''>0 0 0.054999 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.08 0.08 0.029997</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <name>VSS_Player/DarkGrey</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='chassi_tag_visual'>
+          <pose frame=''>0 0 0.069997 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.08 0.08 7e-06</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <uri>file://Textures/VSS</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+          <plugin name='texture' filename='libchange_texture.so'/>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <link name='player::left_wheel'>
+        <pose frame=''>0.215447 -0.033025 0.016 1.5708 -0 3.14</pose>
+        <inertial>
+          <mass>0.00804248</mass>
+          <inertia>
+            <ixx>5.81739e-07</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.81739e-07</iyy>
+            <iyz>0</iyz>
+            <izz>1.02944e-06</izz>
+          </inertia>
+        </inertial>
+        <collision name='left_wheel_collision'>
+          <geometry>
+            <cylinder>
+              <radius>0.016</radius>
+              <length>0.01</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>50</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='left_wheel_visual'>
+          <geometry>
+            <cylinder>
+              <radius>0.016</radius>
+              <length>0.01</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <name>VSS_Player/DarkGrey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <link name='player::right_wheel'>
+        <pose frame=''>0.215553 0.032975 0.016 1.5708 -0 3.14</pose>
+        <inertial>
+          <mass>0.00804248</mass>
+          <inertia>
+            <ixx>5.81739e-07</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.81739e-07</iyy>
+            <iyz>0</iyz>
+            <izz>1.02944e-06</izz>
+          </inertia>
+        </inertial>
+        <collision name='right_wheel_collision'>
+          <geometry>
+            <cylinder>
+              <radius>0.016</radius>
+              <length>0.01</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>50</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='right_wheel_visual'>
+          <geometry>
+            <cylinder>
+              <radius>0.016</radius>
+              <length>0.01</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <name>VSS_Player/DarkGrey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <link name='player::ball_wheel'>
+        <pose frame=''>0.18 3.2e-05 0.01 0 -0 3.14</pose>
+        <inertial>
+          <mass>0.00418879</mass>
+          <inertia>
+            <ixx>1.67552e-07</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.67552e-07</iyy>
+            <iyz>0</iyz>
+            <izz>1.67552e-07</izz>
+          </inertia>
+        </inertial>
+        <collision name='ball_wheel_collision'>
+          <geometry>
+            <sphere>
+              <radius>0.01</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='ball_wheel_visual'>
+          <geometry>
+            <sphere>
+              <radius>0.01</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://Scripts</uri>
+              <name>VSS_Player/DarkGrey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <joint name='player::chassi_left_wheel' type='revolute'>
+        <parent>player::chassi</parent>
+        <child>player::left_wheel</child>
+        <axis>
+          <xyz>0 0 -1</xyz>
+          <use_parent_model_frame>0</use_parent_model_frame>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <joint name='player::chassi_right_wheel' type='revolute'>
+        <parent>player::chassi</parent>
+        <child>player::right_wheel</child>
+        <axis>
+          <xyz>0 0 -1</xyz>
+          <use_parent_model_frame>0</use_parent_model_frame>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <joint name='player::chassi_ball_wheel' type='ball'>
+        <parent>player::chassi</parent>
+        <child>player::ball_wheel</child>
+      </joint>
+      <plugin name='player2 plugin' filename='libpid_control_plugin.so'>
+        <velocity>true</velocity>
+        <pid>0.001 0 0</pid>
+      </plugin>
+    </model>
+    <model name='ball'>
+      <link name='VSS ball::ball'>
+        <pose frame=''>0 0 0.02135 0 -0 0</pose>
+        <inertial>
+          <mass>0.046</mass>
+          <inertia>
+            <ixx>8.38713e-06</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>8.38713e-06</iyy>
+            <iyz>0</iyz>
+            <izz>8.38713e-06</izz>
+          </inertia>
+        </inertial>
+        <collision name='ball_collision'>
+          <geometry>
+            <sphere>
+              <radius>0.02135</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='ball_visual'>
+          <geometry>
+            <sphere>
+              <radius>0.02135</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>1 0.5088 0.0468 1</ambient>
+            <diffuse>1 0.5088 0.0468 1</diffuse>
+            <specular>0.5 0.5 0.5 128</specular>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
     </model>
     <model name='camera'>
       <link name='camera::link'>
@@ -393,7 +896,119 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
-    <model name='campo'>
+    <state world_name='default'>
+      <sim_time>0 0</sim_time>
+      <real_time>0 0</real_time>
+      <wall_time>1507916446 45997831</wall_time>
+      <iterations>0</iterations>
+      <model name='ball'>
+        <pose frame=''>0 0 0.015 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='VSS ball::ball'>
+          <pose frame=''>0 0 0.03635 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='camera'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='camera::link'>
+          <pose frame=''>0 0 2 0 1.57079 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='campo_1'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link_0'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='player1'>
+        <pose frame=''>0 0 0.015 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='player::ball_wheel'>
+          <pose frame=''>-0.18 0 0.025 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='player::chassi'>
+          <pose frame=''>-0.2 0 0.025 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='player::left_wheel'>
+          <pose frame=''>-0.2155 0.033 0.031 1.5708 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='player::right_wheel'>
+          <pose frame=''>-0.2155 -0.033 0.031 1.5708 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='player2'>
+        <pose frame=''>0 0 0.015 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='player::ball_wheel'>
+          <pose frame=''>0.18 3.2e-05 0.025 0 -0 3.14</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='player::chassi'>
+          <pose frame=''>0.2 0 0.025 0 -0 3.14</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='player::left_wheel'>
+          <pose frame=''>0.215447 -0.033025 0.031 1.5708 -0 3.14</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='player::right_wheel'>
+          <pose frame=''>0.215553 0.032975 0.031 1.5708 -0 3.14</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>-1.31101 1.31668 0.818201 -0 0.443642 -0.927809</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <model name='campo_1'>
       <link name='link_0'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
@@ -411,7 +1026,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/victor/catkin_ws/src/AutoGoal-UFMG/campo.stl</uri>
+              <uri>/home/victor/catkin_ws/src/AutoGoal-UFMG/Gazebo-Simulation/Models/campo/campo.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -435,7 +1050,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/victor/catkin_ws/src/AutoGoal-UFMG/campo.stl</uri>
+              <uri>/home/victor/catkin_ws/src/AutoGoal-UFMG/Gazebo-Simulation/Models/campo/campo.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -491,81 +1106,7 @@
       </link>
       <static>1</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <pose frame=''>0 0 0 0 -0 0</pose>
+      <pose frame=''>0.034982 0.084834 0 0 -0 0</pose>
     </model>
-    <state world_name='default'>
-      <sim_time>10 283000000</sim_time>
-      <real_time>10 342602023</real_time>
-      <wall_time>1507868540 650730197</wall_time>
-      <iterations>10283</iterations>
-      <model name='camera'>
-        <pose frame=''>0 0 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='camera::link'>
-          <pose frame=''>0 0 2 0 1.57079 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='campo'>
-        <pose frame=''>0 0 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link_0'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='ground_plane'>
-        <pose frame=''>0 0 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='player'>
-        <pose frame=''>0.516807 0.142278 0.015472 7.7e-05 0.000857 -0.078464</pose>
-        <scale>1 1 1</scale>
-        <link name='player::ball_wheel'>
-          <pose frame=''>0.536754 0.140709 0.025481 0.343926 0.689458 2.68453</pose>
-          <velocity>0.082934 -0.00314 -0.010065 -2.80463 1.087 3.14158</velocity>
-          <acceleration>-0.382088 0.227076 -21.4433 0 -0 0</acceleration>
-          <wrench>-0.0008 0.000476 -0.044911 0 -0 0</wrench>
-        </link>
-        <link name='player::chassi'>
-          <pose frame=''>0.516816 0.142277 0.025472 7.7e-05 0.000857 -0.078464</pose>
-          <velocity>0.082855 -0.003117 -0.003338 0.098987 0.000875 -0.00134</velocity>
-          <acceleration>-0.026726 -0.555295 -8.60682 2.26866 0.868148 -1.73798</acceleration>
-          <wrench>-0.008381 -0.174141 -2.6991 0 -0 0</wrench>
-        </link>
-        <link name='player::left_wheel'>
-          <pose frame=''>0.503955 0.176386 0.031489 -1.56894 1.31238 3.06493</pose>
-          <velocity>0.082875 -0.004668 0.000363 0.295537 -1.10296 -0.00448</velocity>
-          <acceleration>-0.6619 0.034148 -7.70772 -0.190794 1.13764 -2.02962</acceleration>
-          <wrench>-0.002662 0.000137 -0.030995 0 -0 0</wrench>
-        </link>
-        <link name='player::right_wheel'>
-          <pose frame=''>0.498782 0.110593 0.031483 -1.57099 0.079101 3.06311</pose>
-          <velocity>0.082824 -0.003853 -0.006627 0.476461 -1.12172 0.001215</velocity>
-          <acceleration>-0.050265 0.896911 -7.82805 0.648464 -1.32141 -2.75538</acceleration>
-          <wrench>-0.000202 0.003607 -0.031478 0 -0 0</wrench>
-        </link>
-      </model>
-      <light name='sun'>
-        <pose frame=''>0 0 10 0 -0 0</pose>
-      </light>
-    </state>
-    <gui fullscreen='0'>
-      <camera name='user_camera'>
-        <pose frame=''>1.20419 -1.19287 0.870122 0 0.491644 2.2722</pose>
-        <view_controller>orbit</view_controller>
-        <projection_type>perspective</projection_type>
-      </camera>
-    </gui>
   </world>
 </sdf>
