@@ -14,8 +14,8 @@
 
     <model name="court">
       <include>
-        <uri>model://campo/</uri>
-        <pose>-0.2 0 -0.0155 0 0 0</pose>
+        <uri>model://VSS_Court/</uri>
+        <pose>0 0 -0.0155 0 0 0</pose>
         <static>true</static>
       </include>
     </model>

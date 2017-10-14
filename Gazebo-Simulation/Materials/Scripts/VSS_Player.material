@@ -24,6 +24,20 @@ material VSS_Player/Black
   }
 }
 
+material VSS_Player/Court
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        court_material.png
+      }
+    }
+  }
+}
+
 material VSS_Player/blue1
 {
   technique
