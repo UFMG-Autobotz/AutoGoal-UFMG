@@ -1,3 +1,0 @@
-<launch>
-	<node pkg="kinetic_sample_image_sub_py" type="subscriber" name="img_proc" clear_params="true" output="screen"/>
-</launch>

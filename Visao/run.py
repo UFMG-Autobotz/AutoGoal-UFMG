@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
-from kinetic_sample_image_sub_py.sub_img_node import SubImg
+from sub_img_node import SubImg
 
 if __name__ == '__main__':
 	# Initialize
