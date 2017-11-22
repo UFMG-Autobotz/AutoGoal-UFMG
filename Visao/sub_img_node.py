@@ -36,18 +36,18 @@ class SubImg():
     		hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
 
 	    	#Define the threshold for finding a blue object with hsv
-	    	lower_blue = np.array([90,50,50])
-	 	upper_blue = np.array([135,255,255])
+	    	lower_blue = np.array([90,25,25])
+	    	upper_blue = np.array([135,255,255])
 
 	    	#Create a binary image, where anything blue appears white and everything else is black
 	    	mask = cv2.inRange(hsv, lower_blue, upper_blue)
-		
+
 	    	#Get rid of background noise using erosion and fill in the holes using dilation and erode the final image on last time
 	    	element = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
 	    	mask = cv2.erode(mask,element, iterations=2)
 	    	mask = cv2.dilate(mask,element,iterations=2)
 	    	mask = cv2.erode(mask,element)
-	    	
+
 	    	#Create Contours for all blue objects
 	    	_, contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	    	maximumArea = 0
@@ -65,7 +65,8 @@ class SubImg():
 		# ===================
 		# Show windows!
 		# ===================
-
+		if cv2.EVENT_LBUTTONDOWN:
+			print("%d, %d\n" % (x,y))
 		cv2.imshow('raw',cv_image) #raw
 		cv2.imshow('mask', mask) #mask
 		cv2.waitKey(1)
