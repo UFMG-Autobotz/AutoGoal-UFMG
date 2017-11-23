@@ -11,16 +11,11 @@ class Vision_Functions():
 	def set_functions_dict(self):
 		self.func_dict = {}
 		self.func_dict['Escala de cinza'] = lambda frame: cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-		#self.func_dict['Detectar azul'] = lambda frame: self.color_detect(frame, ['azul', 'ciano'])
 		self.func_dict['Detectar azul'] = lambda frame: self.color_detect(frame, ['azul'])
 		self.func_dict['Detectar verde'] = lambda frame: self.color_detect(frame, ['verde'])
-		# self.func_dict['Detectar vermelho'] = lambda frame: self.color_detect(frame, ['vermelho1', 'vermelho2'])
-		self.func_dict['Detectar vermelho'] = lambda frame: self.color_detect(frame, ['vermelho1'])
 		self.func_dict['Detectar laranja'] = lambda frame: self.color_detect(frame, ['laranja'])
-		self.func_dict['Detectar amarelo'] = lambda frame: self.color_detect(frame, ['amarelo'])
-		self.func_dict['Detectar rosa'] = lambda frame: self.color_detect(frame, ['rosa'])
-		self.func_dict['Detectar roxo'] = lambda frame: self.color_detect(frame, ['roxo'])
-
+		self.func_dict['Detectar time amarelo'] = lambda frame: self.robot_detect(frame, ['amarelo'])
+		self.func_dict['Detectar time azul'] = lambda frame: self.robot_detect(frame, ['azul'])
 
 	def get_functions_nicks(self):
 		return self.func_dict.keys()
@@ -66,6 +61,7 @@ class Vision_Functions():
 			return im
 		else:
 			print("Ai que delicia")
+			'''
 			im_list = []
 			for color in color_list:
 				lower_threshold = np.array([colors[color][0], 50, 50])
@@ -95,6 +91,26 @@ class Vision_Functions():
 			for im_i in im_list[1:]:
 				res = cv2.add(res,im_i)
 			return res
+			'''
+
+	def robot_detect(self,im,color_list):
+		hsv = cv2.cvtColor(im, cv2.COLOR_BGR2HSV)
+		colors = {	'amarelo' : range(21,46),
+					'azul' : range(105,128)}
+		color = color_list[0]
+		lower_threshold = np.array([colors[color][0], 50, 50])
+		upper_threshold = np.array([colors[color][-1], 255, 255])
+		mask = cv2.inRange(hsv, lower_threshold, upper_threshold)
+		mask = self.noise_reduction(mask)
+		_, contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+		return mask
+
+	def noise_reduction(self,im):
+		element = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+		im = cv2.erode(im,element, iterations=2)
+		im = cv2.dilate(im,element,iterations=2)
+		im = cv2.erode(im,element)
+		return im
 
 if __name__ == '__main__':
 	pass
