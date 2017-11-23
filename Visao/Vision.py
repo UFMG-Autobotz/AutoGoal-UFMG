@@ -100,10 +100,27 @@ class Vision_Functions():
 		color = color_list[0]
 		lower_threshold = np.array([colors[color][0], 50, 50])
 		upper_threshold = np.array([colors[color][-1], 255, 255])
-		mask = cv2.inRange(hsv, lower_threshold, upper_threshold)
-		mask = self.noise_reduction(mask)
-		_, contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-		return mask
+		mask = cv2.inRange(hsv, lower_threshold, upper_threshold) #Criar imagem binária
+		mask = self.noise_reduction(mask) #Limpar ruídos
+		_, contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) #Detectar contornos
+		#Encontrar maiores áreas:
+		'''maximumArea = 0
+		bestContour = None
+		for contour in contours:
+		currentArea = cv2.contourArea(contour)
+		if currentArea > maximumArea:
+				bestContour = contour
+				maximumArea = currentArea'''
+		# Cria quadrados
+		# if bestContour is not None:
+		# x,y,w,h = cv2.boundingRect(bestContour)
+		(x,y),radius = cv2.minEnclosingCircle(contours[0])
+		center = (int(x),int(y))
+		radius = int(radius)
+		im = cv2.circle(im,center,radius,(0,0,255),2)
+
+		# cv2.rectangle(im, (x,y),(x+w,y+h), (0,0,255), 1)
+		return im
 
 	def noise_reduction(self,im):
 		element = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
