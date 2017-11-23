@@ -129,5 +129,8 @@ class Vision_Functions():
 		im = cv2.erode(im,element)
 		return im
 
+	def no_field_mask(self,im,yellow,blue):
+
+
 if __name__ == '__main__':
 	pass
