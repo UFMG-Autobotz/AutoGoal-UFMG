@@ -3,6 +3,7 @@
 
 import cv2
 import numpy as np
+from math import sqrt
 
 class Vision_Functions():
 	def __init__(self):
@@ -11,9 +12,7 @@ class Vision_Functions():
 	def set_functions_dict(self):
 		self.func_dict = {}
 		self.func_dict['Escala de cinza'] = lambda frame: cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-		self.func_dict['Detectar azul'] = lambda frame: self.color_detect(frame, ['azul'])
-		self.func_dict['Detectar verde'] = lambda frame: self.color_detect(frame, ['verde'])
-		self.func_dict['Detectar laranja'] = lambda frame: self.color_detect(frame, ['laranja'])
+		self.func_dict['Detectar BOLA'] = lambda frame: self.color_detect(frame, ['laranja'])
 		self.func_dict['Detectar time amarelo'] = lambda frame: self.robot_detect(frame, ['amarelo'])
 		self.func_dict['Detectar time azul'] = lambda frame: self.robot_detect(frame, ['azul'])
 
@@ -103,21 +102,31 @@ class Vision_Functions():
 		mask = cv2.inRange(hsv, lower_threshold, upper_threshold) #Criar imagem binária
 		mask = self.noise_reduction(mask) #Limpar ruídos
 		_, contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) #Detectar contornos
-		#Encontrar maiores áreas:
-		'''maximumArea = 0
-		bestContour = None
-		for contour in contours:
-		currentArea = cv2.contourArea(contour)
-		if currentArea > maximumArea:
-				bestContour = contour
-				maximumArea = currentArea'''
-		# Cria quadrados
-		# if bestContour is not None:
-		# x,y,w,h = cv2.boundingRect(bestContour)
-		(x,y),radius = cv2.minEnclosingCircle(contours[0])
-		center = (int(x),int(y))
-		radius = int(radius)
-		im = cv2.circle(im,center,radius,(0,0,255),2)
+		noField = self.no_field_mask(hsv)
+		_, contours2, hierarchy = cv2.findContours(noField, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) #Detectar contornos
+		i = 0
+		while (i < 3) and (i < len(contours)):
+			(x,y),radius = cv2.minEnclosingCircle(contours[i])
+			center = (int(x),int(y))
+			radius = int(radius)
+			im = cv2.circle(im,center,radius,(0,0,255),2)
+
+			(X,Y),radius = cv2.minEnclosingCircle(contours2[0])
+			currentDist = sqrt((x-X)**2) + ((y-Y)**2)
+			j = 1
+			while j < len(contours2):
+				(X2,Y2),radius = cv2.minEnclosingCircle(contours2[j])
+				dist = sqrt((x-X2)**2) + ((y-Y2)**2)
+				if (dist < currentDist):
+					currentDist = dist
+					X = X2
+					Y = Y2
+				j = j+1
+			centerSecond = (int(X),int(Y))
+			centerRobot = (int((X+x)/2),int((Y+y)/2))
+			cv2.arrowedLine(im, center, centerSecond, upper_threshold, 3)
+			im = cv2.circle(im,centerRobot,5,(250,0,0),1)
+			i = i + 1
 
 		# cv2.rectangle(im, (x,y),(x+w,y+h), (0,0,255), 1)
 		return im
@@ -129,8 +138,27 @@ class Vision_Functions():
 		im = cv2.erode(im,element)
 		return im
 
-	def no_field_mask(self,im,yellow,blue):
-
+	def no_field_mask(self,im):
+		#amarelo
+		lower_threshold = (21, 50, 50)
+		upper_threshold = (46, 255, 255)
+		maskAmarelo = cv2.inRange(im, lower_threshold, upper_threshold) #Criar imagem binária
+		#azul
+		lower_threshold = (105, 50, 50)
+		upper_threshold = (128, 255, 255)
+		maskAzul = cv2.inRange(im, lower_threshold, upper_threshold) #Criar imagem binária
+		#laranja
+		lower_threshold = (11, 50, 50)
+		upper_threshold = (21, 255, 255)
+		maskLaranja = cv2.inRange(im, lower_threshold, upper_threshold) #Criar imagem binária
+		#campo
+		lower_threshold = (0, 0, 0)
+		upper_threshold = (180, 50, 50)
+		mask = cv2.inRange(im, lower_threshold, upper_threshold) #Criar imagem binária
+		mask = cv2.bitwise_not(mask)
+		mask = mask - (maskAzul + maskAmarelo + maskLaranja)
+		mask = self.noise_reduction(mask)
+		return mask
 
 if __name__ == '__main__':
 	pass
