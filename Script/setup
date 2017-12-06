@@ -1,17 +1,33 @@
-# checkout branch on submodules
-# to allow working on the submodule
-cd Autobotz-Simulator
-git checkout -b Submodule
+# prepare to print colorful text
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m'
 
-
-# set git push --recurse-submodules=on-demand to defaut
-# to push submodules when pushing the repository
-git config push.recurseSubmodules on-demand
-
+#==============
 
 # create aliases
+echo -e "${YELLOW}Creating useful aliaes:${NC}"
 # push repository with submodules
 git config alias.spush 'push --recurse-submodules=on-demand'
 
 # update submodules
 git config alias.supdate 'submodule update --remote --merge'
+echo -e "${GREEN}Done${NC}"
+
+#==============
+
+# get submodules
+echo -e "${YELLOW}Getting submodules:${NC}"
+# if not already done if --recursive while clonning
+git submodule init
+git submodule update
+echo -e "${GREEN}Done${NC}"
+
+#==============
+
+# checkout new branch on submodules
+# to allow working on the submodules
+echo -e "${YELLOW}Preparing submodules to be used:${NC}"
+cd Autobotz-Simulator
+git checkout master
+echo -e "${GREEN}Done${NC}"
