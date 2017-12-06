@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
         # rate = rospy.Rate(10)
         while not rospy.is_shutdown():
-            goleiro.move_goleiro(campo, bola, artilheiro)
+            goleiro.move_goleiro(campo, bola)
             # rate.sleep()
 
     except rospy.ROSInterruptException:

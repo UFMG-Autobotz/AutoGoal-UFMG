@@ -1,6 +1,3 @@
-[submodule "Simulacoes_Gazebo"]
-	path = Simulacoes_Gazebo
-	url = https://github.com/UFMG-Autobotz/Simulacoes_Gazebo
 [submodule "Autobotz-Simulator"]
 	path = Autobotz-Simulator
 	url = https://github.com/UFMG-Autobotz/Autobotz-Simulator

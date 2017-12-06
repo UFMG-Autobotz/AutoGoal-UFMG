@@ -1,0 +1,17 @@
+# checkout branch on submodules
+# to allow working on the submodule
+cd Autobotz-Simulator
+git checkout -b Submodule
+
+
+# set git push --recurse-submodules=on-demand to defaut
+# to push submodules when pushing the repository
+git config push.recurseSubmodules on-demand
+
+
+# create aliases
+# push repository with submodules
+git config alias.spush 'push --recurse-submodules=on-demand'
+
+# update submodules
+git config alias.supdate 'submodule update --remote --merge'

@@ -36,8 +36,8 @@ class Aliado(Robo):
         self.pubL.publish(omegaE)
 
 
-    def move_goleiro(self, campo, bola, adversario):
-        self.encontra_posicao_goleiro(campo, bola, adversario)
+    def move_goleiro(self, campo, bola):
+        self.encontra_posicao_goleiro_novo(campo, bola)
         self.move_linha_reta()
         self.envia_dados()
 

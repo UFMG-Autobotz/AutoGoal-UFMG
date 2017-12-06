@@ -1,0 +1,6 @@
+# update submodules
+git submodule update --remote --rebase
+
+# compile plugins
+cd Autobotz-Simulator/Plugins
+python compile_all.py
