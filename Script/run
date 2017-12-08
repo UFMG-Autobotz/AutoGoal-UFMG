@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# prepare to print colorful text
+red='\e[0;31m'
+nc='\033[0m'
+
+# print error messages
+function err() {
+  echo -e "${red}$@${nc}" # on red on stdout
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2 # with timestamp on stderr
+}
+
+# run script
+function run() {
+
+  # read world
+  world=$1
+
+  if [ ! $world ] || [ "$world" == "-q" ] || [  "$world" == "-v" ]  || [  "$world" == "-c" ] ; then
+    err "Please choose a world to open."
+    exit 1
+  fi
+
+
+  # default options values
+  quiet=false
+  viewer=false
+  control=true
+
+  # parse options
+  OPTIND=2
+  while getopts q:v:c: option; do
+    case "${option}" in
+      q) quiet=${OPTARG};;
+      v) viewer=${OPTARG};set_viewer=true;;
+      c) control=${OPTARG};;
+    esac
+  done
+
+  # if quiet, viewer default become ture
+  if [ $quiet ] && [ ! $set_viewer ] ; then
+    viewer=true
+  fi
+
+  echo quiet = $quiet
+  echo viewer = $viewer
+  echo control = $control
+}
+
+run $@ 2>> Script/error.log # append error messages to log
