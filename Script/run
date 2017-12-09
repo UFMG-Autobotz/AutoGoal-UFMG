@@ -10,18 +10,51 @@ function err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2 # with timestamp on stderr
 }
 
+# run gazebo
+function run_gazebo {
+  cd Autobotz-Simulator/Bash/ # go to the right directory
+  . Setup/VSS_setup.sh # run vss setup
+
+  if [ $quiet ] ; then
+    gzerver $world
+  else
+    gazebo $world --verbose
+  fi
+}
+
+# run viewer
+function run_viewer {
+  cd Visao/ # go to the right directory
+
+  if [ $viewer ] ; then
+    python Vision.py
+  fi
+}
+
+# run control
+function run_control {
+  cd Autobotz-Simulator/Modules/ # go to the right directory
+
+  if [ $viewer ] ; then
+    python Vision.py
+  fi
+}
+
 # run script
 function run() {
 
-  # read world
+  # READ WORLD
   world=$1
 
+  # check for errors while reading world
   if [ ! $world ] || [ "$world" == "-q" ] || [  "$world" == "-v" ]  || [  "$world" == "-c" ] ; then
     err "Please choose a world to open."
     exit 1
   fi
 
+  world="Worlds/VSS_${world}.world" # append correct sintaxe
 
+  # READ OPTIONS
   # default options values
   quiet=false
   viewer=false
