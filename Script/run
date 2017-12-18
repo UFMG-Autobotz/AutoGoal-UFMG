@@ -38,8 +38,9 @@ function run_control {
   cd "Autobotz-Simulator/Modules/" # go to the right directory
 
   if [ "${1}" == "keyboard" ] ; then
+    cd Keyboard_Command
     topic="VSS_${2}.yaml"
-    python Keyboard_Command/main.py $topic
+    python main.py $topic
   fi
 }
 
