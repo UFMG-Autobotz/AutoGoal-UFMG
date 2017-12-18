@@ -72,7 +72,7 @@ function run() {
   done
 
   # if quiet, viewer default become ture
-  if [ $quiet ] && [ ! $set_viewer ] ; then
+  if [[ "$quiet" == "true" ]] && [[ "$set_viewer" == "false" ]] ; then
     viewer=true
   fi
 
@@ -97,10 +97,6 @@ function run() {
 
   gnome-terminal --disable-factory "${options[@]}"
 
-  # run_gazebo $world $quiet
-  # gnome-terminal --disable-factory --tab -e roscore  --tab -x bash -c 'run_control $control $world; bash' --tab -x bash -c 'run_control $control $world; bash'
-  #  --tab -x bash -c 'run_viewer $viewer; bash'
-#--tab -x bash -c 'run_gazebo $quiet $world; bash'
 }
 
 run $@ 2>> Script/error.log # append error messages to log
