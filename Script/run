@@ -11,14 +11,16 @@ function err() {
 }
 
 # run gazebo
-function run_gazebo {
+function run_gazebo() {
   cd Autobotz-Simulator/Bash/ # go to the right directory
   . Setup/VSS_setup.sh # run vss setup
 
-  if [ $quiet ] ; then
-    gzerver $world
+  file="Worlds/VSS_${2}.world" # append correct sintaxe
+
+  if [[ "${1}" == "true" ]] ; then
+    gzserver $file
   else
-    gazebo $world --verbose
+    gazebo $file --verbose
   fi
 }
 
@@ -26,25 +28,25 @@ function run_gazebo {
 function run_viewer {
   cd Visao/ # go to the right directory
 
-  if [ $viewer ] ; then
+  if [ "${1}" == "true" ] ; then
     python Vision.py
   fi
 }
 
 # run control
 function run_control {
-  cd Autobotz-Simulator/Modules/ # go to the right directory
+  cd "Autobotz-Simulator/Modules/" # go to the right directory
 
-  if [ $viewer ] ; then
-    python Vision.py
+  if [ "${1}" == "keyboard" ] ; then
+    topic="VSS_${2}.yaml"
+    python Keyboard_Command/main.py $topic
   fi
 }
 
 # run script
 function run() {
-
   # READ WORLD
-  world=$1
+  export world=$1
 
   # check for errors while reading world
   if [ ! $world ] || [ "$world" == "-q" ] || [  "$world" == "-v" ]  || [  "$world" == "-c" ] ; then
@@ -52,13 +54,11 @@ function run() {
     exit 1
   fi
 
-  world="Worlds/VSS_${world}.world" # append correct sintaxe
-
   # READ OPTIONS
   # default options values
-  quiet=false
-  viewer=false
-  control=true
+  export quiet=false
+  export viewer=false
+  export control=keyboard
 
   # parse options
   OPTIND=2
@@ -78,6 +78,28 @@ function run() {
   echo quiet = $quiet
   echo viewer = $viewer
   echo control = $control
+
+  export -f run_gazebo
+  export -f run_viewer
+  export -f run_control
+
+  options=()
+
+  cmds[1]="roscore"
+  cmds[2]="run_gazebo $quiet $world"
+  cmds[3]="run_viewer $viewer"
+  cmds[4]="run_control $control $world"
+
+  for i in {1..4}; do
+  options+=(--tab -e "bash -c '${cmds[i]} ; bash'" )
+  done
+
+  gnome-terminal --disable-factory "${options[@]}"
+
+  # run_gazebo $world $quiet
+  # gnome-terminal --disable-factory --tab -e roscore  --tab -x bash -c 'run_control $control $world; bash' --tab -x bash -c 'run_control $control $world; bash'
+  #  --tab -x bash -c 'run_viewer $viewer; bash'
+#--tab -x bash -c 'run_gazebo $quiet $world; bash'
 }
 
 run $@ 2>> Script/error.log # append error messages to log
