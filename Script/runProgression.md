@@ -34,4 +34,12 @@ World | Quiet | Viewer | Control | Command | Status
 1on1 | True | Defaut | Keyboard | `Script/run 1on1 -q true -c keyboard` | :warning:
 1on1 | True | True | Keyboard | `Script/run 1on1 -q true -v true -c keyboard` | :warning:
 
-<sup>1</sup>using the generic viewer from the GUI module
+###### 1on1 | quiet | no viewer | keyboard<sup>2</sup>
+World | Quiet | Viewer | Control | Command | Status
+--- | ---| --- | --- | --- | ---
+1on1 | True | False | Defaut | `Script/run 1on1 -q true -v false` | :white_check_mark:
+1on1 | True | False | Keyboard | `Script/run 1on1 -q true -v false -c keyboard` | :white_check_mark:
+
+
+* <sup>1</sup> using the generic viewer from the GUI module
+* <sup>2</sup> you will need to manually open a viewer in order to see the simulation
