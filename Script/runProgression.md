@@ -45,27 +45,27 @@ World | Quiet | Viewer | Control | Command | Status
 ###### 1on1 | not quiet | no viewer | no control<sup>3</sup>
 World | Quiet | Viewer | Control | Command | Status
 --- | ---| --- | --- | --- | ---
-1on1 | Defaut | Defaut | False | `Script/run 1on1 -c false` | :warning:
-1on1 | Defaut | False | False | `Script/run 1on1 -v false -c false` | :warning:
-1on1 | False | Default | False | `Script/run 1on1 -q false -c false` | :warning:
-1on1 | False | False | False | `Script/run 1on1 -q false -v false -c false` | :warning:
+1on1 | Defaut | Defaut | False | `Script/run 1on1 -c false` | :white_check_mark:
+1on1 | Defaut | False | False | `Script/run 1on1 -v false -c false` | :white_check_mark:
+1on1 | False | Default | False | `Script/run 1on1 -q false -c false` | :white_check_mark:
+1on1 | False | False | False | `Script/run 1on1 -q false -v false -c false` | :white_check_mark:
 
 ###### 1on1 | not quiet | viewer | no control<sup>3</sup>
 World | Quiet | Viewer | Control | Command | Status
 --- | ---| --- | --- | --- | ---
-1on1 | Defaut | True | False | `Script/run 1on1 -v true -c false` |  :warning:
-1on1 | False | True | False | `Script/run 1on1 -q false -v true -c false` |  :warning:
+1on1 | Defaut | True | False | `Script/run 1on1 -v true -c false` |  :white_check_mark:
+1on1 | False | True | False | `Script/run 1on1 -q false -v true -c false` | :white_check_mark:
 
 ###### 1on1 | quiet | no viewer<sup>2</sup> | no control<sup>3</sup>
 World | Quiet | Viewer | Control | Command | Status
 --- | ---| --- | --- | --- | ---
-1on1 | True | False | False | `Script/run 1on1 -q true -v false -c false` | :warning:
+1on1 | True | False | False | `Script/run 1on1 -q true -v false -c false` | :white_check_mark:
 
 ###### 1on1 | quiet | viewer | no control<sup>3</sup>
 World | Quiet | Viewer | Control | Command | Status
 --- | ---| --- | --- | --- | ---
-1on1 | True | Defaut | False | `Script/run 1on1 -q true -c false` | :warning:
-1on1 | True | True | False | `Script/run 1on1 -q true -v true -c false` | :warning:
+1on1 | True | Defaut | False | `Script/run 1on1 -q true -c false` | :white_check_mark:
+1on1 | True | True | False | `Script/run 1on1 -q true -v true -c false` | :white_check_mark:
 
 
 * <sup>1</sup> using the generic viewer from the GUI module
