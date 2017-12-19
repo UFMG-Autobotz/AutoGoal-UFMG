@@ -37,8 +37,8 @@ World | Quiet | Viewer | Control | Command | Status
 --- | ---| --- | --- | --- | ---
 1on1 | True | Defaut | Defaut | `Script/run 1on1 -q true` | :white_check_mark:<sup>1</sup>
 1on1 | True | True | Defaut | `Script/run 1on1 -q true -v true` | :white_check_mark:<sup>1</sup>
-1on1 | True | Defaut | Keyboard | `Script/run 1on1 -q true -c keyboard` | :warning:
-1on1 | True | True | Keyboard | `Script/run 1on1 -q true -v true -c keyboard` | :warning:
+1on1 | True | Defaut | Keyboard | `Script/run 1on1 -q true -c keyboard` | :white_check_mark:<sup>1</sup>
+1on1 | True | True | Keyboard | `Script/run 1on1 -q true -v true -c keyboard` | :white_check_mark:<sup>1</sup>
 
 <!--  -->
 
