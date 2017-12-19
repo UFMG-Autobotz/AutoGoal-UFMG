@@ -60,6 +60,7 @@ function run() {
   export quiet=false
   export viewer=false
   export control=keyboard
+  set_viewer=false
 
   # parse options
   OPTIND=2
