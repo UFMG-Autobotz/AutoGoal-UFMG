@@ -11,7 +11,7 @@ World | Quiet | Viewer | Control | Command | Status
 1on1 | False | False | Defaut=Keyboard | `Script/run 1on1 -q false -v false` |  not tested
 1on1 | False | Default=False | Keyboard | `Script/run 1on1 -q false -c keyboard` |  not tested
 1on1 | False | False | Keyboard | `Script/run 1on1 -q false -v false -c keyboard` |  working
-
+<!-- teste -->
 1on1 | Defaut=False | True | Defaut=Keyboard | `Script/run 1on1 -v true` |  working*
 1on1 | True | Defaut=True | Defaut=Keyboard | `Script/run 1on1 -q true` | working*
 1on1 | True | True | Defaut=Keyboard | `Script/run 1on1 -q true -v true` | working*
