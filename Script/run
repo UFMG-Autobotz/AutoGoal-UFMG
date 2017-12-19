@@ -1,13 +1,16 @@
 #!/bin/bash
 
 # prepare to print colorful text
-red='\e[0;31m'
-nc='\033[0m'
+export red='\e[0;31m'
+export nc='\033[0m'
+
+# save the root of the git repository (used to save erros on the log)
+export git_root=$(pwd)
 
 # print error messages
 function err() {
   echo -e "${red}$@${nc}" # on red on stdout
-  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2 # with timestamp on stderr
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >> "${git_root}/Script/error.log"  # with timestamp on stderr
 }
 
 # run gazebo
@@ -31,7 +34,7 @@ function run_viewer {
   if [ "${1}" == "true" ] ; then
     python Image.py
   else
-    echo "Viewer not enabled"
+    echo "Viewer not enabled."
   fi
 }
 
@@ -39,10 +42,16 @@ function run_viewer {
 function run_control {
   cd "Autobotz-Simulator/Modules/" # go to the right directory
 
-  if [ "${1}" == "keyboard" ] ; then
+  if [[ "${1}" == "keyboard" ]] ; then
     cd Keyboard_Command
     topic="VSS_${2}.yaml"
     python main.py $topic
+  elif [[ "${1}" == "joystick" ]] ; then
+    echo "Joystick not implemented yet."
+  elif [[ "${1}" == "false" ]] ; then
+    echo "Controller not enabled."
+  else
+    err "Controller not recognised"
   fi
 }
 
@@ -86,6 +95,7 @@ function run() {
   export -f run_gazebo
   export -f run_viewer
   export -f run_control
+  export -f err
 
   options=()
 
@@ -95,11 +105,11 @@ function run() {
   cmds[4]="run_control $control $world"
 
   for i in {1..4}; do
-    options+=(--tab -e "bash -c '${cmds[i]} ; bash'" )
+    options+=(--tab -e "bash -c '${cmds[i]}; bash'" )
   done
 
   gnome-terminal --disable-factory "${options[@]}"
 
 }
 
-run $@ 2>> Script/error.log # append error messages to log
+run $@
