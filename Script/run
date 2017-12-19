@@ -30,6 +30,8 @@ function run_viewer {
 
   if [ "${1}" == "true" ] ; then
     python Image.py
+  else
+    echo "Viewer not enabled"
   fi
 }
 
@@ -93,7 +95,7 @@ function run() {
   cmds[4]="run_control $control $world"
 
   for i in {1..4}; do
-  options+=(--tab -e "bash -c '${cmds[i]} ; bash'" )
+    options+=(--tab -e "bash -c '${cmds[i]} ; bash'" )
   done
 
   gnome-terminal --disable-factory "${options[@]}"
