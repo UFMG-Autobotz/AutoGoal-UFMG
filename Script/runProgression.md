@@ -14,8 +14,8 @@ World | Quiet | Viewer | Control | Command | Status
 1on1 | Defaut | False | Defaut | `Script/run 1on1 -v false` | :white_check_mark:
 1on1 | Defaut | False | Keyboard | `Script/run 1on1 -v false -c keyboard` | :white_check_mark:
 1on1 | False | Defaut | Defaut | `Script/run 1on1 -q false` | :white_check_mark:
-1on1 | False | False | Defaut | `Script/run 1on1 -q false -v false` | :warning:
-1on1 | False | Default | Keyboard | `Script/run 1on1 -q false -c keyboard` | :warning:
+1on1 | False | False | Defaut | `Script/run 1on1 -q false -v false` | :white_check_mark:
+1on1 | False | Default | Keyboard | `Script/run 1on1 -q false -c keyboard` | :white_check_mark:
 1on1 | False | False | Keyboard | `Script/run 1on1 -q false -v false -c keyboard` | :white_check_mark:
 
 ###### 1on1 | not quiet | viewer | keyboard
@@ -69,3 +69,9 @@ World | Quiet | Viewer | Control | Command | Status
 * <sup>1</sup> using the generic viewer from the GUI module
 * <sup>2</sup> you will need to manually open a viewer in order to see the simulation
 * <sup>3</sup> you will need to manually open a controller in order to move the robots
+
+##### Next test:
+* Different order for the arguments
+* No world
+* World Penalty (not opening the strategy yet)
+* Help (not implemented yet)
