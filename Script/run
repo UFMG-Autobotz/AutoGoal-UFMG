@@ -88,9 +88,13 @@ function run() {
     viewer=true
   fi
 
-  echo quiet = $quiet
-  echo viewer = $viewer
-  echo control = $control
+  # display configuration
+  echo -e "You are running AutoGoal-UFMG with the following configuration:"
+  echo -e "\t - world: $world"
+  echo -e "\t - quiet: $quiet"
+  echo -e "\t - viewer: $viewer"
+  echo -e "\t - control: $control"
+  echo -e "\nPress Ctrl-C to quit."
 
   export -f run_gazebo
   export -f run_viewer
