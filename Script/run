@@ -26,10 +26,10 @@ function run_gazebo() {
 
 # run viewer
 function run_viewer {
-  cd Visao/ # go to the right directory
+  cd "Autobotz-Simulator/Modules/GUI" # go to the right directory
 
   if [ "${1}" == "true" ] ; then
-    python Vision.py
+    python Image.py
   fi
 }
 
