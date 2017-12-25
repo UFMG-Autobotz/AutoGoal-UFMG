@@ -48,7 +48,7 @@ function run_control {
     python main.py $topic
   elif [[ "${1}" == "joystick" ]] ; then
     echo "Joystick not implemented yet."
-  elif [[ "${1}" == "false" ]] ; then
+  elif [[ "${1}" == "none" ]] || [[ "${1}" == "false" ]] ; then
     echo "Controller not enabled."
   else
     err "Controller not recognised"
