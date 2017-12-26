@@ -51,7 +51,18 @@ function run_control {
   elif [[ "${1}" == "none" ]] || [[ "${1}" == "false" ]] ; then
     echo "Controller not enabled."
   else
-    err "Controller not recognised"
+    err "Controller not recognised."
+  fi
+}
+
+# run strategy
+function run_strategy {
+  cd "Estrategia/" # go to the right directory
+
+  if [[ "${1}" == "penalty" ]] ; then
+    python main.py
+  else
+    echo "No strategy implemented for this world."
   fi
 }
 
@@ -99,16 +110,18 @@ function run() {
   export -f run_gazebo
   export -f run_viewer
   export -f run_control
+  export -f run_strategy
   export -f err
 
   options=()
 
-  cmds[1]="roscore"
-  cmds[2]="run_gazebo $quiet $world"
-  cmds[3]="run_viewer $viewer"
-  cmds[4]="run_control $control $world"
+  cmds[0]="roscore"
+  cmds[1]="run_gazebo $quiet $world"
+  cmds[2]="run_viewer $viewer"
+  cmds[3]="run_control $control $world"
+  cmds[4]="run_strategy $world"
 
-  for i in {1..4}; do
+  for i in {0..4}; do
     options+=(--tab -e "bash -c '${cmds[i]}; bash'" )
   done
 
