@@ -19,3 +19,6 @@ Use it once after cloning the project to:
 Use it after `git pull` to:
 * update submodules;
 * recompile all plugins of the Autobotz-Simulator submodule.
+
+## Script/run
+> runs demonstration simulations with only on command
