@@ -70,6 +70,16 @@ World | Quiet | Viewer | Control | Command | Status
 * <sup>2</sup> you will need to manually open a viewer in order to see the simulation
 * <sup>3</sup> you will need to manually open a controller in order to move the robots
 
+##### Different order
+Order | Command | Status
+--- | --- | ---
+123 | `Script/run 1on1 -q false -v true -c keyboard` | :warning:
+132 | `Script/run 1on1 -q false -c keyboard -v true` | :warning:
+213 | `Script/run 1on1 -v true -q false -c keyboard` | :warning:
+231 | `Script/run 1on1 -v true -c keyboard -q false` | :warning:
+312 | `Script/run 1on1 -c keyboard -q false -v true` | :warning:
+321 | `Script/run 1on1 -c keyboard -v true -q false` | :warning:
+
 ##### Next test:
 * Different order for the arguments
 * No world
