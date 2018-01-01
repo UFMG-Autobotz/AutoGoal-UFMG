@@ -42,7 +42,7 @@ class Aliado(Robo):
         self.envia_dados()
 
     def move_linha_reta(self):
-        margem = 0.1
+        margem = 0.05
         if (self.posDesejada.y > (self.pos.y + margem)):
             self.omegaD =  Robo.w
             self.omegaE =  Robo.w
