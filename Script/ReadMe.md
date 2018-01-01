@@ -21,4 +21,22 @@ Use it after `git pull` to:
 * recompile all plugins of the Autobotz-Simulator submodule.
 
 ## Script/run
-> runs demonstration simulations with only on command
+> runs demonstration simulations with a single command
+
+#### Usage
+`Script/run world [options]`
+
+#### Worlds implemented
+* penalty
+* 1on1
+
+#### Options
+* -q: **quiet** - boolean, default is false
+* -v: **viewer** - boolean, default is false when not quiet and true when quiet
+* -c: **control** - keyboard or none, default is keyboard
+
+#### Example
+```
+# run world 1on1 on quiet mode (with viewer enabled and keyboard control by default)
+Script/run 1on1 -q true
+```
