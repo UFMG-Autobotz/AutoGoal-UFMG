@@ -80,6 +80,17 @@ Order | Command | Status
 312 | `Script/run 1on1 -c keyboard -q false -v true` | :white_check_mark:
 321 | `Script/run 1on1 -c keyboard -v true -q false` | :white_check_mark:
 
+
+##### Errors
+Error | Command | Status
+--- | --- | ---
+no arguments | `Script/run` | :warning:
+forget World | `Script/run -q true` | :warning:
+invalid World | `Script/run mundo` | :warning:
+invalid Quiet | `Script/run 1on1 -q 10` | :warning:
+invalid Viewer | `Script/run 1on1 -v oi` | :warning:
+invalid control | `Script/run 1on1 -c teclado` | :warning:
+not implemented control | `Script/run 1on1 -c joystick` | :warning:
+
 ##### Next test:
-* Errors
 * World Penalty
