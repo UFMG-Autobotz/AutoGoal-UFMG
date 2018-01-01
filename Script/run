@@ -72,9 +72,19 @@ function run() {
   export world=$1
 
   # check for errors while reading world
-  if [ ! $world ] || [ "$world" == "-q" ] || [  "$world" == "-v" ]  || [  "$world" == "-c" ] ; then
+  if [[ ! $world ]] || [[ "$world" == "-q" ]] || [[  "$world" == "-v" ]]  || [[  "$world" == "-c" ]] ; then
     err "Please choose a world to open."
     exit 1
+  elif [[ "$world" == "--help" ]]  || [[ "$world" == "-h" ]]; then
+    echo -e "Script/run - runs demonstration simulations with a single command\n"
+    echo -e "SINTAXE: Script/run world [options]"
+    echo -e "Worlds implemented: penalty and 1on1\n"
+    echo -e "Options:"
+    echo -e "\t -q: quiet - true or false, default is false"
+    echo -e "\t -v: viewer - true or false, default is false when not quiet and true when quiet"
+    echo -e "\t -c: control - keyboard or none, default is keyboard"
+
+    exit 0
   fi
 
   # READ OPTIONS
