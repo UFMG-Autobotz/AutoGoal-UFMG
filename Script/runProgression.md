@@ -84,11 +84,11 @@ Order | Command | Status
 ##### Errors
 Error | Command | Status
 --- | --- | ---
-no arguments | `Script/run` | :warning:
-forget World | `Script/run -q true` | :warning:
-invalid World | `Script/run mundo` | :warning:
-invalid Quiet | `Script/run 1on1 -q 10` | :warning:
-invalid Viewer | `Script/run 1on1 -v oi` | :warning:
+no arguments | `Script/run` | :white_check_mark:
+forget World | `Script/run -q true` | :white_check_mark:
+invalid World | `Script/run mundo` | :x:
+invalid Quiet | `Script/run 1on1 -q 10` | :x:
+invalid Viewer | `Script/run 1on1 -v oi` | :x:
 invalid control | `Script/run 1on1 -c teclado` | :warning:
 not implemented control | `Script/run 1on1 -c joystick` | :warning:
 
