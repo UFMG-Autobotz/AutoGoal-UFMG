@@ -86,11 +86,12 @@ Error | Command | Status
 --- | --- | ---
 no arguments | `Script/run` | :white_check_mark:
 forget World | `Script/run -q true` | :white_check_mark:
-invalid World | `Script/run mundo` | :x:
-invalid Quiet | `Script/run 1on1 -q 10` | :x:
-invalid Viewer | `Script/run 1on1 -v oi` | :x:
-invalid control | `Script/run 1on1 -c teclado` | :warning:
-not implemented control | `Script/run 1on1 -c joystick` | :warning:
+invalid World | `Script/run mundo` | :white_check_mark:
+invalid Quiet | `Script/run 1on1 -q 10` | :white_check_mark:
+invalid Viewer | `Script/run 1on1 -v oi` | :white_check_mark:
+invalid control | `Script/run 1on1 -c teclado` | :white_check_mark:
+not implemented control | `Script/run 1on1 -c joystick` | :white_check_mark:<sup>4</sup>
+* <sup>4</sup> with joystick the script run, a message saying it isn't implemented yet is showed on the control tab
 
 ##### Next test:
 * World Penalty
