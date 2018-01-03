@@ -13,8 +13,38 @@ function err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >> "${git_root}/Script/error.log"  # with timestamp on stderr
 }
 
+# function to quit if a value is not in an allowance list
+function check_value {
+  local -n allowed_values=$1
+  valid=$(printf "%s\n" "${allowed_values[@]}" | grep -x "${2}" | wc -l)
+
+  if [[ "$valid" == "0" ]] ; then
+    err "${3}"
+    exit 1
+  fi
+}
+
+# validate entries for world, quiet, viewer and control
+function validate {
+  # validate Worlds
+  valid_worlds=(1on1 penalty)
+  check_value valid_worlds $world "World not found!"
+
+  # validate Quiet
+  valid_quiet=(true false)
+  check_value valid_quiet $quiet "Incorrect value for quiet option!"
+
+  # validate viewer
+  valid_viewer=(true false)
+  check_value valid_viewer $viewer "Incorrect value for viewer option!"
+
+  # validate Control
+  valid_control=(keyboard false none joystick)
+  check_value valid_control $control "Invalid controller!"
+}
+
 # run gazebo
-function run_gazebo() {
+function run_gazebo {
   cd Autobotz-Simulator/Bash/ # go to the right directory
   . Setup/VSS_setup.sh # run vss setup
 
@@ -50,8 +80,6 @@ function run_control {
     echo "Joystick not implemented yet."
   elif [[ "${1}" == "none" ]] || [[ "${1}" == "false" ]] ; then
     echo "Controller not enabled."
-  else
-    err "Controller not recognised."
   fi
 }
 
@@ -104,10 +132,12 @@ function run() {
     esac
   done
 
-  # if quiet, viewer default become ture
+  # if quiet, viewer default become true
   if [[ "$quiet" == "true" ]] && [[ "$set_viewer" == "false" ]] ; then
     viewer=true
   fi
+
+  validate # validate entries before running (quit if something is wrong)
 
   # display configuration
   echo -e "You are running AutoGoal-UFMG with the following configuration:"
