@@ -38,7 +38,7 @@ Use it after `git pull` to:
 #### Example
 ```
 # run world 1on1 (with the Gazebo GUI, viewer disabled and keyboard control by default)
-Script/run 1on1 -q true
+Script/run 1on1
 
 # run world penalty on quiet mode (with viewer enabled and keyboard control by default)
 Script/run penalty -q true
