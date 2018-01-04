@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# ============ #
+
 # prepare to print colorful text
 export red='\e[0;31m'
 export nc='\033[0m'
@@ -7,11 +9,15 @@ export nc='\033[0m'
 # save the root of the git repository (used to save erros on the log)
 export git_root=$(pwd)
 
-# print error messages
+# ============ #
+
+# function to print error messages
 function err() {
   echo -e "${red}$@${nc}" # on red on stdout
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >> "${git_root}/Script/error.log"  # with timestamp on stderr
 }
+
+# ============ #
 
 # function to quit if a value is not in an allowance list
 function check_value {
@@ -24,26 +30,10 @@ function check_value {
   fi
 }
 
-# validate entries for world, quiet, viewer and control
-function validate {
-  # validate Worlds
-  valid_worlds=(1on1 penalty)
-  check_value valid_worlds $world "World not found!"
+# ============ #
 
-  # validate Quiet
-  valid_quiet=(true false)
-  check_value valid_quiet $quiet "Incorrect value for quiet option!"
-
-  # validate viewer
-  valid_viewer=(true false)
-  check_value valid_viewer $viewer "Incorrect value for viewer option!"
-
-  # validate Control
-  valid_control=(keyboard false none joystick)
-  check_value valid_control $control "Invalid controller!"
-}
-
-# run gazebo
+# function to run gazebo
+# $1 = $quiet $2 = $world
 function run_gazebo {
   cd Autobotz-Simulator/Bash/ # go to the right directory
   . Setup/VSS_setup.sh # run vss setup
@@ -57,7 +47,10 @@ function run_gazebo {
   fi
 }
 
-# run viewer
+# ============ #
+
+# function to run viewer
+# $1 = $viewer
 function run_viewer {
   cd "Autobotz-Simulator/Modules/GUI" # go to the right directory
 
@@ -68,7 +61,10 @@ function run_viewer {
   fi
 }
 
-# run control
+# ============ #
+
+# function to run control
+# $1 = $control $2 = $world
 function run_control {
   cd "Autobotz-Simulator/Modules/" # go to the right directory
 
@@ -83,7 +79,10 @@ function run_control {
   fi
 }
 
-# run strategy
+# ============ #
+
+# function to run strategy
+# $1 = $world
 function run_strategy {
   cd "Estrategia/" # go to the right directory
 
@@ -94,79 +93,105 @@ function run_strategy {
   fi
 }
 
-# run script
-function run() {
-  # READ WORLD
-  export world=$1
+# ============ #
 
-  # check for errors while reading world
-  if [[ ! $world ]] || [[ "$world" == "-q" ]] || [[  "$world" == "-v" ]]  || [[  "$world" == "-c" ]] ; then
-    err "Please choose a world to open."
-    exit 1
-  elif [[ "$world" == "--help" ]]  || [[ "$world" == "-h" ]]; then
-    echo -e "Script/run - runs demonstration simulations with a single command\n"
-    echo -e "SINTAXE: Script/run world [options]"
-    echo -e "Worlds implemented: penalty and 1on1\n"
-    echo -e "Options:"
-    echo -e "\t -q: quiet - true or false, default is false"
-    echo -e "\t -v: viewer - true or false, default is false when not quiet and true when quiet"
-    echo -e "\t -c: control - keyboard or none, default is keyboard"
+# READ WORLD
+export world=$1
 
-    exit 0
-  fi
+# ------------ #
 
-  # READ OPTIONS
-  # default options values
-  export quiet=false
-  export viewer=false
-  export control=keyboard
-  set_viewer=false
+# check for errors while reading world
+if [[ ! $world ]] || [[ "$world" == "-q" ]] || [[  "$world" == "-v" ]]  || [[  "$world" == "-c" ]] ; then
+  err "Please choose a world to open."
+  exit 1
+fi
 
-  # parse options
-  OPTIND=2
-  while getopts q:v:c: option; do
-    case "${option}" in
-      q) quiet=${OPTARG};;
-      v) viewer=${OPTARG};set_viewer=true;;
-      c) control=${OPTARG};;
-    esac
-  done
+# ------------ #
 
-  # if quiet, viewer default become true
-  if [[ "$quiet" == "true" ]] && [[ "$set_viewer" == "false" ]] ; then
-    viewer=true
-  fi
+# check for help
+if [[ "$world" == "--help" ]]  || [[ "$world" == "-h" ]]; then
+  echo -e "Script/run - runs demonstration simulations with a single command\n"
+  echo -e "SINTAXE: Script/run world [options]"
+  echo -e "Worlds implemented: penalty and 1on1\n"
+  echo -e "Options:"
+  echo -e "\t -q: quiet - boolean, default is false"
+  echo -e "\t -v: viewer - boolean, default is false when not quiet and true when quiet"
+  echo -e "\t -c: control - keyboard or none, default is keyboard"
 
-  validate # validate entries before running (quit if something is wrong)
+  exit 0
+fi
 
-  # display configuration
-  echo -e "You are running AutoGoal-UFMG with the following configuration:"
-  echo -e "\t - world: $world"
-  echo -e "\t - quiet: $quiet"
-  echo -e "\t - viewer: $viewer"
-  echo -e "\t - control: $control"
-  echo -e "\nPress Ctrl-C to quit."
+# ------------ #
 
-  export -f run_gazebo
-  export -f run_viewer
-  export -f run_control
-  export -f run_strategy
-  export -f err
+# READ OPTIONS
+# default options values
+export quiet=false
+export viewer=false
+export control=keyboard
+set_viewer=false
 
-  options=()
+# parse options
+OPTIND=2
+while getopts q:v:c: option; do
+  case "${option}" in
+    q) quiet=${OPTARG};;
+    v) viewer=${OPTARG};set_viewer=true;;
+    c) control=${OPTARG};;
+  esac
+done
 
-  cmds[0]="roscore"
-  cmds[1]="run_gazebo $quiet $world"
-  cmds[2]="run_viewer $viewer"
-  cmds[3]="run_control $control $world"
-  cmds[4]="run_strategy $world"
+# if quiet, viewer default become true
+if [[ "$quiet" == "true" ]] && [[ "$set_viewer" == "false" ]] ; then
+  viewer=true
+fi
 
-  for i in {0..4}; do
-    options+=(--tab -e "bash -c '${cmds[i]}; bash'" )
-  done
+# ------------ #
 
-  gnome-terminal --disable-factory "${options[@]}"
+# validate entries before running (quit if something is wrong)
+# validate Worlds
+valid_worlds=(1on1 penalty)
+check_value valid_worlds $world "World not found!"
 
-}
+# validate Quiet
+valid_quiet=(true false)
+check_value valid_quiet $quiet "Incorrect value for quiet option!"
 
-run $@
+# validate viewer
+valid_viewer=(true false)
+check_value valid_viewer $viewer "Incorrect value for viewer option!"
+
+# validate Control
+valid_control=(keyboard false none joystick)
+check_value valid_control $control "Invalid controller!"
+
+# ------------ #
+
+# display configuration
+echo -e "You are running AutoGoal-UFMG with the following configuration:"
+echo -e "\t - world: $world"
+echo -e "\t - quiet: $quiet"
+echo -e "\t - viewer: $viewer"
+echo -e "\t - control: $control"
+echo -e "\nPress Ctrl-C to quit."
+
+# ------------ #
+
+# export functions to run them on child processes
+export -f run_gazebo
+export -f run_viewer
+export -f run_control
+export -f run_strategy
+
+# run functions on gnome terminal tabs
+cmds[0]="roscore"
+cmds[1]="run_gazebo $quiet $world"
+cmds[2]="run_viewer $viewer"
+cmds[3]="run_control $control $world"
+cmds[4]="run_strategy $world"
+
+tabs=()
+for i in {0..4}; do
+  tabs+=(--tab -e "bash -c '${cmds[i]}; bash'" )
+done
+
+gnome-terminal --disable-factory "${tabs[@]}"
