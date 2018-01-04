@@ -92,14 +92,14 @@ not implemented control | `Script/run 1on1 -c joystick` | :white_check_mark:<sup
 ##### Penalty
 World | Quiet | Viewer | Control | Command | Status
 --- | ---| --- | --- | --- | ---
-penalty | Defaut | Defaut | Defaut | `Script/run penalty` | :warning:
-penalty | Defaut | True | Defaut | `Script/run penalty -v true` | :warning:<sup>1</sup>
-penalty | True | False | Defaut | `Script/run penalty -q true -v false` | :warning:
-penalty | True | Defaut | Defaut | `Script/run penalty -q true` | :warning:<sup>1</sup>
-penalty | Defaut | Defaut | False | `Script/run penalty -c false` | :warning:
-penalty | Defaut | True | False | `Script/run penalty -v true -c false` |  :warning:<sup>1</sup>
-penalty | True | False | False | `Script/run penalty -q true -v false -c false` | :warning:
-penalty | True | Defaut | False | `Script/run penalty -q true -c false` | :warning:<sup>1</sup>
+penalty | Defaut | Defaut | Defaut | `Script/run penalty` | :white_check_mark:
+penalty | Defaut | True | Defaut | `Script/run penalty -v true` | :white_check_mark:<sup>1</sup>
+penalty | True | False | Defaut | `Script/run penalty -q true -v false` | :white_check_mark:<sup>2</sup>
+penalty | True | Defaut | Defaut | `Script/run penalty -q true` | :white_check_mark:<sup>1</sup>
+penalty | Defaut | Defaut | False | `Script/run penalty -c false` | :white_check_mark:<sup>3</sup>
+penalty | Defaut | True | False | `Script/run penalty -v true -c false` |  :white_check_mark:<sup>1</sup><sup>3</sup>
+penalty | True | False | False | `Script/run penalty -q true -v false -c false` | :white_check_mark:<sup>2</sup><sup>3</sup>
+penalty | True | Defaut | False | `Script/run penalty -q true -c false` | :white_check_mark:<sup>1</sup><sup>3</sup>
 
 * <sup>1</sup> using the generic viewer from the GUI module
 * <sup>2</sup> you will need to manually open a viewer in order to see the simulation
