@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # prepare to print colorful text
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
@@ -14,6 +16,6 @@ echo -e "${GREEN}Done${NC}"
 
 # compile plugins
 echo -e "${YELLOW}Compiling Autobotz-Simulator plugins:${NC}"
-cd Autobotz-Simulator/Plugins
+cd Autobotz-Simulator/03_Plugins
 python compile_all.py
 echo -e "${GREEN}Done${NC}"

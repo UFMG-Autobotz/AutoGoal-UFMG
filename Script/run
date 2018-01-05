@@ -35,7 +35,7 @@ function check_value {
 # function to run gazebo
 # $1 = $quiet $2 = $world
 function run_gazebo {
-  cd Autobotz-Simulator/Bash/ # go to the right directory
+  cd Autobotz-Simulator/04_Bash/ # go to the right directory
   . Setup/VSS_setup.sh # run vss setup
 
   file="Worlds/VSS_${2}.world" # append correct sintaxe
@@ -52,7 +52,7 @@ function run_gazebo {
 # function to run viewer
 # $1 = $viewer
 function run_viewer {
-  cd "Autobotz-Simulator/Modules/GUI" # go to the right directory
+  cd "Autobotz-Simulator/07_Modules/GUI" # go to the right directory
 
   if [ "${1}" == "true" ] ; then
     python Image.py
@@ -66,7 +66,7 @@ function run_viewer {
 # function to run control
 # $1 = $control $2 = $world
 function run_control {
-  cd "Autobotz-Simulator/Modules/" # go to the right directory
+  cd "Autobotz-Simulator/07_Modules/" # go to the right directory
 
   if [[ "${1}" == "keyboard" ]] ; then
     cd Keyboard_Command
