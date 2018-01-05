@@ -38,7 +38,7 @@ function run_gazebo {
   cd Autobotz-Simulator/04_Bash/ # go to the right directory
   . Setup/VSS_setup.sh # run vss setup
 
-  file="Worlds/VSS_${2}.world" # append correct sintaxe
+  file="02_Worlds/VSS_${2}.world" # append correct sintaxe
 
   if [[ "${1}" == "true" ]] ; then
     gzserver $file
