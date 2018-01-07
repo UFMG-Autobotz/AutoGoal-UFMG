@@ -12,14 +12,17 @@ export git_root=$(pwd)
 # ============ #
 
 # function to print error messages
+# messages are displayed on the terminal on red
+# and saved on error.log with timestamp
 function err() {
   echo -e "${red}$@${nc}" # on red on stdout
-  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >> "${git_root}/Script/error.log"  # with timestamp on stderr
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >> "${git_root}/script/error.log"  # with timestamp on stderr
 }
 
 # ============ #
 
 # function to quit if a value is not in an allowance list
+# $1=allowed_values $2=allowance_list $3=error_message
 function check_value {
   local -n allowed_values=$1
   valid=$(printf "%s\n" "${allowed_values[@]}" | grep -x "${2}" | wc -l)
@@ -35,16 +38,14 @@ function check_value {
 # function to run gazebo
 # $1 = $quiet $2 = $world
 function run_gazebo {
-  cd Autobotz-Simulator/04_Bash/ # go to the right directory
-  . Setup/VSS_setup.sh # run vss setup
-
+  cd Autobotz-Simulator/ # go to the right directory
   file="02_Worlds/VSS_${2}.world" # append correct sintaxe
 
   if [[ "${1}" == "true" ]] ; then
-    gzserver $file
-  else
-    gazebo $file --verbose
+    quiet_option="-q"
   fi
+
+  script/run VSS ${2,,} $quiet_option
 }
 
 # ============ #
@@ -52,7 +53,7 @@ function run_gazebo {
 # function to run viewer
 # $1 = $viewer
 function run_viewer {
-  cd "Autobotz-Simulator/07_Modules/GUI" # go to the right directory
+  cd "Autobotz-Simulator/modules/GUI" # go to the right directory
 
   if [ "${1}" == "true" ] ; then
     python Image.py
@@ -66,7 +67,7 @@ function run_viewer {
 # function to run control
 # $1 = $control $2 = $world
 function run_control {
-  cd "Autobotz-Simulator/07_Modules/" # go to the right directory
+  cd "Autobotz-Simulator/modules/" # go to the right directory
 
   if [[ "${1}" == "keyboard" ]] ; then
     cd Keyboard_Command
@@ -134,9 +135,9 @@ set_viewer=false
 OPTIND=2
 while getopts q:v:c: option; do
   case "${option}" in
-    q) quiet=${OPTARG};;
-    v) viewer=${OPTARG};set_viewer=true;;
-    c) control=${OPTARG};;
+    q) quiet=${OPTARG,,};;
+    v) viewer=${OPTARG,,};set_viewer=true;;
+    c) control=${OPTARG,,};;
   esac
 done
 
@@ -150,19 +151,19 @@ fi
 # validate entries before running (quit if something is wrong)
 # validate Worlds
 valid_worlds=(1on1 penalty)
-check_value valid_worlds $world "World not found!"
+check_value valid_worlds $world "World not found: $world!"
 
 # validate Quiet
 valid_quiet=(true false)
-check_value valid_quiet $quiet "Incorrect value for quiet option!"
+check_value valid_quiet $quiet "Incorrect value for quiet option: $quiet!"
 
 # validate viewer
 valid_viewer=(true false)
-check_value valid_viewer $viewer "Incorrect value for viewer option!"
+check_value valid_viewer $viewer "Incorrect value for viewer option: $viewer!"
 
 # validate Control
 valid_control=(keyboard false none joystick)
-check_value valid_control $control "Invalid controller!"
+check_value valid_control $control "Invalid controller: $control!"
 
 # ------------ #
 

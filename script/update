@@ -16,6 +16,6 @@ echo -e "${GREEN}Done${NC}"
 
 # compile plugins
 echo -e "${YELLOW}Compiling Autobotz-Simulator plugins:${NC}"
-cd Autobotz-Simulator/03_Plugins
-python compile_all.py
+cd Autobotz-Simulator/
+script/compile all
 echo -e "${GREEN}Done${NC}"
