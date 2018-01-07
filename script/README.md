@@ -3,8 +3,7 @@
 These scripts are inspired by the [normalized script pattern that GitHub uses in its projects](https://githubengineering.com/scripts-to-rule-them-all/).
 Here's a description of what each script used in this project does.
 
-
-## Script/setup
+## script/setup
 > sets up a project to be used for the first time
 
 Use it once after cloning the project to:
@@ -12,19 +11,18 @@ Use it once after cloning the project to:
 * download submodules;
 * prepare submodules to allow your contribution.
 
-
-## Script/update
+## script/update
 > updates a project to run at its current version
 
 Use it after `git pull` to:
 * update submodules;
 * recompile all plugins of the Autobotz-Simulator submodule.
 
-## Script/run
+## script/run
 > runs demonstration simulations with a single command
 
 #### Usage
-`Script/run world [options]`
+`script/run world [options]`
 
 #### Worlds implemented
 * penalty
@@ -38,11 +36,11 @@ Use it after `git pull` to:
 #### Example
 ```
 # run world 1on1 (with the Gazebo GUI, viewer disabled and keyboard control by default)
-Script/run 1on1
+script/run 1on1
 
 # run world penalty on quiet mode (with viewer enabled and keyboard control by default)
-Script/run penalty -q true
+script/run penalty -q true
 
 # see the options of the plugin
-Script/run --help
+script/run --help
 ```
