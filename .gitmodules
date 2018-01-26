@@ -1,3 +1,6 @@
 [submodule "Autobotz-Simulator"]
 	path = Autobotz-Simulator
 	url = https://github.com/UFMG-Autobotz/Autobotz-Simulator
+[submodule "Autobotz-user-interface"]
+	path = Autobotz-user-interface
+	url = https://github.com/UFMG-Autobotz/Autobotz-user-interface.git

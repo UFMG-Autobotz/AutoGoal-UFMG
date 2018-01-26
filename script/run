@@ -53,7 +53,7 @@ function run_gazebo {
 # function to run viewer
 # $1 = $viewer
 function run_viewer {
-  cd "Autobotz-Simulator/modules/GUI" # go to the right directory
+  cd "Autobotz-user-interface/GUI" # go to the right directory
 
   if [ "${1}" == "true" ] ; then
     python Image.py
@@ -67,10 +67,9 @@ function run_viewer {
 # function to run control
 # $1 = $control $2 = $world
 function run_control {
-  cd "Autobotz-Simulator/modules/" # go to the right directory
+  cd "Autobotz-user-interface/Keyboard_Command" # go to the right directory
 
   if [[ "${1}" == "keyboard" ]] ; then
-    cd Keyboard_Command
     topic="VSS_${2}.yaml"
     python main.py $topic
   elif [[ "${1}" == "joystick" ]] ; then
