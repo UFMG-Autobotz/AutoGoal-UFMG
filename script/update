@@ -9,7 +9,7 @@ NC='\033[0m'
 
 # update submodules
 echo -e "${YELLOW}Updating submodules:${NC}"
-git supdate
+git submodule update --remote --merge
 echo -e "${GREEN}Done${NC}"
 
 #==============
@@ -18,4 +18,5 @@ echo -e "${GREEN}Done${NC}"
 echo -e "${YELLOW}Compiling Autobotz-Simulator plugins:${NC}"
 cd Autobotz-Simulator/
 script/compile all
+cd ..
 echo -e "${GREEN}Done${NC}"
