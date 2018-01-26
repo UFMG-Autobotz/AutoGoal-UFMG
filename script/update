@@ -9,7 +9,7 @@ NC='\033[0m'
 
 # update submodules
 echo -e "${YELLOW}Updating submodules:${NC}"
-git submodule update --remote --merge
+git supdate
 echo -e "${GREEN}Done${NC}"
 
 #==============
