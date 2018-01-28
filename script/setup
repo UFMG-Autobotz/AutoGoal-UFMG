@@ -30,6 +30,11 @@ echo -e "${GREEN}Done${NC}"
 # checkout new branch on submodules
 # to allow working on the submodules
 echo -e "${YELLOW}Preparing submodules to be used:${NC}"
+# Autobotz-Simulator
 cd Autobotz-Simulator
+git checkout master
+cd ..
+# Autobotz-user-interface
+cd Autobotz-user-interface
 git checkout master
 echo -e "${GREEN}Done${NC}"
