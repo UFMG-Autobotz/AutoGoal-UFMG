@@ -69,13 +69,11 @@ function run_viewer {
 function run_control {
   cd "Autobotz-user-interface/" # go to the right directory
 
-  if [[ "${1}" == "keyboard" ]] ; then
-    topic="config/Device/VSS_${2}_keyboard.yaml"
-    python Device.py $topic
-  elif [[ "${1}" == "joystick" ]] ; then
-    echo "Joystick not implemented yet."
-  elif [[ "${1}" == "none" ]] || [[ "${1}" == "false" ]] ; then
+  if [[ "${1}" == "none" ]] || [[ "${1}" == "false" ]] ; then
     echo "Controller not enabled."
+  else
+    topic="config/Device/VSS_${2}_${1}.yaml"
+    python Device.py $topic
   fi
 }
 
@@ -116,7 +114,7 @@ if [[ "$world" == "--help" ]]  || [[ "$world" == "-h" ]]; then
   echo -e "Options:"
   echo -e "\t -q: quiet - boolean, default is false"
   echo -e "\t -v: viewer - boolean, default is false when not quiet and true when quiet"
-  echo -e "\t -c: control - keyboard or none, default is keyboard"
+  echo -e "\t -c: control - keyboard, gamepad, both or none, default is keyboard"
 
   exit 0
 fi
@@ -161,7 +159,7 @@ valid_viewer=(true false)
 check_value valid_viewer $viewer "Incorrect value for viewer option: $viewer!"
 
 # validate Control
-valid_control=(keyboard false none joystick)
+valid_control=(keyboard gamepad both false none)
 check_value valid_control $control "Invalid controller: $control!"
 
 # ------------ #
