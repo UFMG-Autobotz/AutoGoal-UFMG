@@ -72,8 +72,8 @@ function run_control {
   if [[ "${1}" == "none" ]] || [[ "${1}" == "false" ]] ; then
     echo "Controller not enabled."
   else
-    topic="config/Device/VSS_${2}_${1}.yaml"
-    python Device.py $topic
+    topic="VSS_${2}_${1}.yaml"
+    python Drive.py $topic
   fi
 }
 
