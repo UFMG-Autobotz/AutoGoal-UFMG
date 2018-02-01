@@ -8,7 +8,7 @@ import math
 import numpy
 
 import rospy
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 
 
 class Aliado(Robo):
@@ -16,8 +16,8 @@ class Aliado(Robo):
     def __init__(self, subscriber, publisher_esquerda, publisher_direita):
         Robo.__init__(self, subscriber)
 
-        self.pubL = rospy.Publisher(publisher_esquerda, Float32, queue_size = 100)
-        self.pubR = rospy.Publisher(publisher_direita, Float32, queue_size = 100)
+        self.pubL = rospy.Publisher(publisher_esquerda, Float64, queue_size = 100)
+        self.pubR = rospy.Publisher(publisher_direita, Float64, queue_size = 100)
 
         self.orientacaoDesejada = Vetor(0, 0)
         self.posDesejada = Vetor(0, 0)
