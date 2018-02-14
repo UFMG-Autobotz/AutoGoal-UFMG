@@ -10,14 +10,18 @@ import numpy
 import rospy
 from std_msgs.msg import Float64
 
-
+#classe usada para guardar informacoes e funcionalidades dos robos aliados
 class Aliado(Robo):
 
+    # inicializa o objeto dadas as coordenadas da posicao e da orientacao atuais, desejadas e previstas, o lado do campo de seu time, sua velocidade linear e angular, as velocidades angulares de cada roda, alem dos topicos do ROS em que esta publicando e recebendo
     def __init__(self, subscriber, publisher_esquerda, publisher_direita):
         Robo.__init__(self, subscriber)
 
         self.pubL = rospy.Publisher(publisher_esquerda, Float64, queue_size = 100)
         self.pubR = rospy.Publisher(publisher_direita, Float64, queue_size = 100)
+
+        self.vel = 0 #velocidade linear (inicializada como zero)
+        self.omega = 0 #velocidade angular (inicializada como zero)
 
         self.orientacaoDesejada = Vetor(0, 0)
         self.posDesejada = Vetor(0, 0)
@@ -28,6 +32,7 @@ class Aliado(Robo):
         self.omegaD = 0 # velocidade angular da roda direita
         self.omegaE = 0 # velocidade angular da roda esquerda
 
+    #envia a velocidade angular das rodas para o robo
     def envia_dados(self):
         omegaE = self.omegaE
         omegaD = self.omegaD
@@ -36,11 +41,13 @@ class Aliado(Robo):
         self.pubL.publish(omegaE)
 
 
+    #movimenta o goleiro para que ele defenda o gol 
     def move_goleiro(self, campo, bola):
         self.encontra_posicao_goleiro_novo(campo, bola)
         self.move_linha_reta()
         self.envia_dados()
 
+    #move para a posicao desejada em linha reta, sem alterar sua orientacao
     def move_linha_reta(self):
         margem = 0.05
         if (self.posDesejada.y > (self.pos.y + margem)):
@@ -56,6 +63,8 @@ class Aliado(Robo):
             self.omegaE = -1 * Robo.w
 
 
+    #encontra posicao e orientacao desejadas para goleiro
+    #baseado apenas na posicao da bola
     def encontra_posicao_goleiro_novo(self, campo, bola):
         self.orientacaoDesejada = Vetor.unitario(math.pi/2)
         self.posDesejada.x = campo.get_gol(self.lado).centro().x
@@ -68,6 +77,7 @@ class Aliado(Robo):
 
 
    #encontra posicao e orientacao desejadas para goleiro
+   #baseado na reta que passa pelo artilheiro e pela bola
     def encontra_posicao_goleiro(self, campo, bola, adversario):
         self.orientacaoDesejada = Vetor.unitario(math.pi/2) # orientacao paralela a linha do gol
         self.posDesejada.x = campo.get_gol(self.lado).centro().x # no eixo x, centro do gol
@@ -84,7 +94,7 @@ class Aliado(Robo):
         if (self.posDesejada.y > campo.maxLgol):
             self.posDesejada.y = campo.maxLgol
 
-        # print "posicao desejada - x: %s, y: %s / orientacao desejada: %s" % (self.posDesejada.x, self.posDesejada.y, self.orientacaoDesejada.angulo())
+        print "posicao desejada - x: %s, y: %s / orientacao desejada: %s" % (self.posDesejada.x, self.posDesejada.y, self.orientacaoDesejada.angulo())
 
 
     # calcula o raio e o sentido da trajetoria

@@ -5,6 +5,7 @@ import rospy
 from geometry_msgs.msg import Pose
 import math
 
+#classe usada para guadar informacoes sobre os robos do time adversario
 class Robo():
     L = 0.063 # tamanho do eixo das rodas em cm
     r = 0.016 # raio das rodas em cm
@@ -12,13 +13,10 @@ class Robo():
     w = 10 # velocidade angular das rodas - determinar valor adequado
 
 
-    # inicializa o objeto dadas as coordenadas da posicao, a orientacao e o numero do jogador
+    # inicializa o objeto dadas as coordenadas da posicao e da orientacao, o lado do campo do seu time e o topico do ROS onde esta subscrito
     def __init__(self, topic):
         self.orientacao = Vetor(0, 0)
         self.pos = Vetor(0, 0)
-
-        self.vel = 0 #velocidade linear (inicializada como zero)
-        self.omega = 0 #velocidade angular (inicializada como zero)
 
         self.lado = 0
 
