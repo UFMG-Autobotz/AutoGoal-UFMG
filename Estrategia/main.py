@@ -17,7 +17,7 @@ if __name__ == '__main__':
     try:
         campo = Campo()
         bola = Bola("/ball/pose")
-        goleiro = Aliado("/player1/pose", "/player1__player__chassi_left_wheel/joint_vel", "/player1__player__chassi_right_wheel/joint_vel")
+        goleiro = Aliado("/player1/pose", "/player1__VSS_player__chassi_left_wheel/joint_vel", "/player1player2__VSS_player__chassi_right_wheel/joint_vel")
         artilheiro = Robo("/player2/pose")
 
         # rate = rospy.Rate(10)
