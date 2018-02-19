@@ -31,7 +31,7 @@ Use it after `git pull` to:
 #### Options
 * -q: **quiet** - boolean, default is false
 * -v: **viewer** - boolean, default is false when not quiet and true when quiet
-* -c: **control** - keyboard, gamepad, both or none, default is keyboard
+* -c: **control** - keyboard, gamepad or none, default is keyboard
 
 #### Example
 ```
