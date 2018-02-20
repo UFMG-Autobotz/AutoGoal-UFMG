@@ -1,14 +1,20 @@
 # -*- coding: utf-8 -*-
 
-import yaml, rospy, cv2
+import sys
+import rospy
+import cv2
+import numpy as np
+import yaml
+from std_msgs.msg import String
+from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
 class autoCalibration():
     def __init__(self, topic):
+        self.bridge = CvBridge()
         imageTopic = self.loadConfig(topic)
-        print(imageTopic['topic'][0])
-        self.image_sub = rospy.Subscriber(imageTopic['topic'][0], Image, callback_img)
-
+        print(imageTopic['topic'][0]) # print topic from yaml
+        self.sub_img = rospy.Subscriber(imageTopic['topic'][0], Image, self.callback_img)
 
     def loadConfig(self, config):
         try:
@@ -18,10 +24,10 @@ class autoCalibration():
             print "Error: Invalid configuration file!"
             quit()
 
-    def set_img_source(self):
-    		def callback_img(data):
-    			try:
-    				self.img_orig = self.bridge.imgmsg_to_cv2(data, "bgr8")
-    			except CvBridgeError as e:
-    				print(e)
-    		self.image_sub = rospy.Subscriber(str(self.img_source.currentText()), Image, callback_img)
+    def callback_img(self, msg_in):
+        try:
+            cv_image = self.bridge.imgmsg_to_cv2( msg_in, "bgr8" )
+        except CvBridgeError as e:
+            print(e)
+        cv2.imshow('image',cv_image)
+        cv2.waitKey(1)
